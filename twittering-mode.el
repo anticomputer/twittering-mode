@@ -204,19 +204,19 @@ To use bit.ly or j.mp services, you have to configure
        (when (string-match "\"id\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\""
 			   reply)
 	 (match-string 1 reply))))
-    (is.gd . "http://is.gd/create.php?format=simple&url=")
+    (is.gd . "https://is.gd/create.php?format=simple&url=")
     (j.mp twittering-make-http-request-for-bitly
 	  (lambda (service reply)
 	    (if (string-match "\n\\'" reply)
 		(substring reply 0 (match-beginning 0))
 	      reply)))
-    (migre.me . "http://migre.me/api.txt?url=")
-    (tinyurl . "http://tinyurl.com/api-create.php?url=")
+    (migre.me . "https://migre.me/api.txt?url=")
+    (tinyurl . "https://tinyurl.com/api-create.php?url=")
     (toly
      (lambda (service longurl)
        (twittering-make-http-request-from-uri
 	"POST" nil
-	"http://to.ly/api.php"
+	"https://to.ly/api.php"
 	(concat "longurl=" (twittering-percent-encode longurl))))))
   "Alist of URL shortening services.
 The key is a symbol specifying the service.
@@ -4514,8 +4514,8 @@ Before calling this, you have to configure `twittering-bitly-login' and
 	     ("longUrl" . ,(twittering-percent-encode longurl)))
 	   "&"))
 	 (prefix
-	  (cdr (assq service '((bit.ly . "http://api.bit.ly/v3/shorten?")
-			       (j.mp . "http://api.j.mp/v3/shorten?")))))
+	  (cdr (assq service '((bit.ly . "https://api.bit.ly/v3/shorten?")
+			       (j.mp . "https://api.j.mp/v3/shorten?")))))
 	 (uri (concat prefix query-string)))
     (twittering-make-http-request-from-uri "GET" nil uri)))
 
@@ -5600,14 +5600,14 @@ The file is specified by `twittering-user-id-db-file'."
 (defun twittering-get-status-url-twitter (username &optional id)
   "Generate status URL for Twitter."
   (if id
-      (format "http://%s/%s/status/%s" twittering-web-host username id)
-    (format "http://%s/%s" twittering-web-host username)))
+      (format "https://%s/%s/status/%s" twittering-web-host username id)
+    (format "https://%s/%s" twittering-web-host username)))
 
 (defun twittering-get-status-url-statusnet (username &optional id)
   "Generate status URL for StatusNet."
   (if id
-      (format "http://%s/%s/notice/%s" twittering-web-host twittering-web-path-prefix id)
-    (format "http://%s/%s/%s" twittering-web-host twittering-web-path-prefix username)))
+      (format "https://%s/%s/notice/%s" twittering-web-host twittering-web-path-prefix id)
+    (format "https://%s/%s/%s" twittering-web-host twittering-web-path-prefix username)))
 
 (defun twittering-get-search-url (query-string)
   "Generate a URL for searching QUERY-STRING."
@@ -5617,16 +5617,16 @@ The file is specified by `twittering-user-id-db-file'."
     (funcall func query-string)))
 
 (defun twittering-get-search-url-twitter (query-string)
-  (format "http://%s/search?q=%s"
+  (format "https://%s/search?q=%s"
 	  twittering-web-host (twittering-percent-encode query-string)))
 
 (defun twittering-get-search-url-statusnet (query-string)
   (if (string-match "^#\\(.+\\)" query-string)
-      (format "http://%s/%s/tag/%s"
+      (format "https://%s/%s/tag/%s"
 	      twittering-web-host
 	      twittering-web-path-prefix
 	      (twittering-percent-encode (match-string 1 query-string)))
-    (format "http://%s/search?q=%s"
+    (format "https://%s/search?q=%s"
 	    twittering-web-host (twittering-percent-encode query-string))))
 
 (defun twittering-extract-id-from-url (url-string)
@@ -9463,7 +9463,7 @@ following symbols;
 			       (= 48 twittering-convert-fix-size))
 			   "normal"
 			 "bigger")))
-		  (format "http://%s/%s/%s.xml?size=%s" twittering-api-host
+		  (format "https://%s/%s/%s.xml?size=%s" twittering-api-host
 			  (twittering-api-path "users/profile_image") user size)))
 	       (t
 		(cdr (assq 'user-profile-image-url ,status-sym))))))
