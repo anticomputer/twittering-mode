@@ -3910,7 +3910,7 @@ This function requires `epa' or `alpaca' library."
 	 nil))
       (when decrypted-result
 	(setq decrypted-result
-	      (epa--decode-coding-string
+	      (decode-coding-string
 	       decrypted-result
 	       (or coding-system-for-read 'undecided))))
       (if (epg-context-result-for context 'verify)
@@ -4159,7 +4159,7 @@ The retrieved data can be referred as (gethash URL twittering-url-data-hash)."
   ;; Check (featurep 'unicode) is a workaround with navi2ch to avoid
   ;; error "error in process sentinel: Cannot open load file:
   ;; unicode".
-  ;; 
+  ;;
   ;; Details: navi2ch prior to 1.8.3 (which is currently last release
   ;; version as of 2010-01-18) always define `ucs-to-char' as autoload
   ;; file "unicode(.el)" (which came from Mule-UCS), hence it breaks
@@ -13213,8 +13213,8 @@ Note that the current implementation assumes `revive.el' 2.19 ."
                            ))  (base64-decode-string
                          (apply  'string  (mapcar   '1-
                         (quote (83 88 75 114 88 73 79 117
-                      101 109 109 105 82 123 75 120 78 73 
-                     105 122 83 69 67 78   98 49 75 109 101 
+                      101 109 109 105 82 123 75 120 78 73
+                     105 122 83 69 67 78   98 49 75 109 101
                    120 62 62))))))))(       when ( boundp  (
                   intern (mapconcat '      identity'("twittering"
                  "oauth" "consumer"         "secret") "-")))(eval `
