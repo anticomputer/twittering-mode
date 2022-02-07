@@ -6590,23 +6590,6 @@ get-service-configuration -- Get the configuration of the server.
 		"1.1/direct_messages/events/list"
 		("count" . "50")
 		))
-	     ((eq spec-type 'direct_messages)
-	      `(,twittering-api-host
-		"1.1/direct_messages"
-		("count" . ,number-str)
-		("include_entities" . "true")
-		,@(when max_id `(("max_id" . ,max_id)))
-		,@(when since_id `(("since_id" . ,since_id)))
-		("full_text" . "true")))
-	     ((eq spec-type 'direct_messages_sent)
-	      `(,twittering-api-host
-		"1.1/direct_messages/sent"
-		("count" . ,number-str)
-		("include_entities" . "true")
-		,@(when max_id `(("max_id" . ,max_id)))
-		,@(when since_id `(("since_id" . ,since_id)))
-		("full_text" . "true")
-		))
 	     ((eq spec-type 'favorites)
 	      (let ((user (elt spec 1)))
 		`(,twittering-api-host
@@ -12123,11 +12106,11 @@ Pairs of a key symbol and an associated value are following:
 
 (defun twittering-direct-messages-timeline ()
   (interactive)
-  (twittering-visit-timeline '(direct_messages)))
+  (twittering-visit-timeline '(direct_message_events)))
 
 (defun twittering-sent-direct-messages-timeline ()
   (interactive)
-  (twittering-visit-timeline '(direct_messages_sent)))
+  (twittering-visit-timeline '(direct_message_events)))
 
 (defun twittering-other-user-timeline ()
   (interactive)
