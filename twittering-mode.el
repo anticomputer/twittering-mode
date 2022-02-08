@@ -1472,17 +1472,15 @@ as the connection method."
 ;;;; CA certificate
 ;;;;
 
-(defvar twittering-cert-file nil
+(require 'cl)
+
+(defvar twittering-cert-file (when (gnutls-available-p)
+			       (dolist (f gnutls-trustfiles)
+				 (when (file-exists-p f)
+				   (cl-return f))))
+
   "The full-path of the file including the certificates authorizing
 servers on SSL.")
-
-;; use gnutls trustfiles where available
-(when (gnutls-available-p)
-  ;; if we have gnutls available, use that to get a cert file
-  (mapc (lambda (f)
-	  (when (file-exists-p f)
-	    (setq twittering-cert-file f)))
-	gnutls-trustfiles))
 
 (defconst twittering-ca-cert-list
   '(
