@@ -12822,7 +12822,8 @@ Return nil if no statuses are rendered."
 	  ;; Here, the cursor points to the footer field or the end of
 	  ;; the buffer. It should be moved backward to a normal tweet.
 	  (twittering-goto-last-normal-field)
-	  (twittering-get-and-render-timeline nil oldest-id))))))))
+	  (twittering-get-and-render-timeline nil oldest-id)))))))
+  (twittering-highlight-status-at-point))
 
 (defun twittering-get-next-status-head (&optional pos)
   "Search forward from POS for the nearest head of a status.
@@ -12869,7 +12870,8 @@ Otherwise, return a positive integer greater than POS."
 	  (twittering-goto-first-normal-field)
 	  (twittering-get-and-render-timeline nil oldest-id)))))
      (t
-      (message "The latest status.")))))
+      (message "The latest status."))))
+  (twittering-highlight-status-at-point))
 
 (defun twittering-get-previous-status-head (&optional pos)
   "Search backward from POS for the nearest head of a status.
@@ -13042,6 +13044,21 @@ which fetch older tweets on reverse-mode."
     (goto-char (point-min)))
    (t
     (scroll-down))))
+
+;;;; Highlighting
+
+(defvar twittering--highlight-overlay nil)
+
+(defun twittering-highlight-status-at-point ()
+  (let ((start (twittering-get-current-status-head))
+	(end (twittering-get-next-status-head)))
+    ;; init the overlay on first use
+    (when (and start end)
+      (unless twittering--highlight-overlay
+	(setq twittering--highlight-overlay (make-overlay start end))
+	(overlay-put twittering--highlight-overlay 'face 'highlight))
+      (when twittering--highlight-overlay
+	(move-overlay twittering--highlight-overlay start end)))))
 
 ;;;; Kill ring
 
