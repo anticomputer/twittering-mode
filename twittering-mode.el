@@ -13052,13 +13052,12 @@ which fetch older tweets on reverse-mode."
 (defun twittering-highlight-status-at-point ()
   (let ((start (twittering-get-current-status-head))
 	(end (twittering-get-next-status-head)))
-    ;; init the overlay on first use
     (when (and start end)
+      ;; init the overlay on first use, then reuse it from there on out
       (unless twittering--highlight-overlay
 	(setq twittering--highlight-overlay (make-overlay start end))
 	(overlay-put twittering--highlight-overlay 'face 'highlight))
-      (when twittering--highlight-overlay
-	(move-overlay twittering--highlight-overlay start end)))))
+      (move-overlay twittering--highlight-overlay start end))))
 
 ;;;; Kill ring
 
