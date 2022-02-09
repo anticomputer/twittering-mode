@@ -13045,7 +13045,7 @@ which fetch older tweets on reverse-mode."
 
 ;;;; Highlighting
 
-(defvar twittering--highlight-overlay nil)
+(defvar-local twittering--highlight-overlay nil)
 
 (defun twittering-highlight-status-at-point ()
   (let ((start (twittering-get-current-status-head))
